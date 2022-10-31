@@ -63,9 +63,12 @@ class Recording:
     def mp4(self):
         return self._dict['mp4']
 
-    # def download(self, filename=None):
-    #     if filename is None:
-    #         filename =
+    def download(self, filename=None):
+        if filename is None:
+            filename = f"{self.camera['serial_number']}-{self.label}.mp4"
+        headers = {'Authorization': f"Token {self._dict['token']}"}
+        response = requests.get(self.mp4, headers=headers, allow_redirects=True)
+        open(filename, 'wb').write(response.content)
 
 class Recordings:
 
